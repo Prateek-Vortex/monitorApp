@@ -1,0 +1,4 @@
+openai
+pynput
+tk
+pystray
