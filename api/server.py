@@ -4,6 +4,9 @@ from core.reminders import show_test_reminder
 import uvicorn
 import threading
 from core.tracker import start_tracking
+from fastapi import Query
+from datetime import datetime, timedelta
+import json
 
 app = FastAPI()
 
@@ -34,6 +37,27 @@ def test_reminder():
 def begin_tracking():
     print("✅ FocusBae tracker started...")
     threading.Thread(target=start_tracking, daemon=True).start()
+
+@app.get("/app-usage")
+def get_app_usage(since_minutes: int = Query(default=1440)):  # default = last 24h
+    now = datetime.now()
+    cutoff = now - timedelta(minutes=since_minutes)
+
+    # Load screen log from disk
+    with open("data/focusbae_screenlog.json", "r") as f:
+        log = json.load(f)
+
+    usage = {}
+    for entry in log:
+        ts = datetime.fromisoformat(entry["timestamp"])
+        if ts < cutoff or entry["activity"] != "Active screen":
+            continue
+        app = entry["detail"]
+        usage[app] = usage.get(app, 0) + 60  # assuming LOG_INTERVAL = 60
+
+    # Return usage in minutes
+    sorted_usage = sorted(usage.items(), key=lambda x: x[1], reverse=True)
+    return {app: round(secs / 60, 1) for app, secs in sorted_usage}
 
 
 if __name__ == "__main__":

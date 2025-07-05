@@ -66,7 +66,10 @@ def start_tracking():
             stats["active_seconds"] += LOG_INTERVAL
             active_time_counter += LOG_INTERVAL
             active_time_counter = maybe_trigger_reminder(active_time_counter, REMINDER_THRESHOLD)
-
+            if app:
+                stats["app_usage"].setdefault(app, 0)
+                stats["app_usage"][app] += LOG_INTERVAL
+                
         time.sleep(LOG_INTERVAL)
 # def start_tracking():
 #     global is_idle, active_time_counter
