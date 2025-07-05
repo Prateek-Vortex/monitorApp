@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from api.state import paused, stats
+from core.reminders import show_test_reminder
 import uvicorn
+import threading
+from core.tracker import start_tracking
 
 app = FastAPI()
 
@@ -21,6 +24,17 @@ def get_stats():
         "idle_events": stats["idle_count"],
         "reminders_sent": stats["reminder_count"]
     }
+
+@app.get("/test-reminder")
+def test_reminder():
+    show_test_reminder()
+    return {"status": "Reminder triggered manually"}
+
+@app.on_event("startup")
+def begin_tracking():
+    print("✅ FocusBae tracker started...")
+    threading.Thread(target=start_tracking, daemon=True).start()
+
 
 if __name__ == "__main__":
     uvicorn.run("api.server:app", host="0.0.0.0", port=5001, reload=False)
