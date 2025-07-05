@@ -3,6 +3,8 @@ import threading
 import subprocess
 import os
 from pynput import mouse, keyboard
+from api.state import paused, stats
+
 
 from config import IDLE_THRESHOLD, LOG_INTERVAL, REMINDER_THRESHOLD
 from core.logger import log_action
@@ -49,9 +51,16 @@ def start_tracking():
 
     while True:
         now = time.time()
+        if paused.is_set():
+            time.sleep(5)
+            continue
+
+        # When active
+        stats["active_seconds"] += LOG_INTERVAL
         if now - last_active_time > IDLE_THRESHOLD:
             if not is_idle:
                 log_action("Idle started")
+                stats["idle_count"] += 1  
                 is_idle = True
         else:
             app = get_foreground_app()

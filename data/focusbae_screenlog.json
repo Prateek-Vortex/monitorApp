@@ -1,12 +1,37 @@
 [
   {
-    "timestamp": "2025-07-04T19:40:40.328421",
+    "timestamp": "2025-07-05T13:50:58.750616",
     "activity": "Active screen",
     "detail": "Electron"
   },
   {
-    "timestamp": "2025-07-04T19:40:51.281472",
-    "activity": "Reminder shown",
-    "detail": "\"Stay hydrated: Your body is 70% water, not a desert! Drink up and let your cells dance!\""
+    "timestamp": "2025-07-05T13:51:59.028233",
+    "activity": "Active screen",
+    "detail": "Google Chrome"
+  },
+  {
+    "timestamp": "2025-07-05T13:52:59.289094",
+    "activity": "Active screen",
+    "detail": "Google Chrome"
+  },
+  {
+    "timestamp": "2025-07-05T13:53:59.501160",
+    "activity": "Active screen",
+    "detail": "Google Chrome"
+  },
+  {
+    "timestamp": "2025-07-05T13:54:59.705161",
+    "activity": "Active screen",
+    "detail": "Google Chrome"
+  },
+  {
+    "timestamp": "2025-07-05T13:55:59.890878",
+    "activity": "Active screen",
+    "detail": "Google Chrome"
+  },
+  {
+    "timestamp": "2025-07-05T13:57:00.088334",
+    "activity": "Active screen",
+    "detail": "Google Chrome"
   }
 ]
